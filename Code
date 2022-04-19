@@ -1,0 +1,16 @@
+run("Set Measurements...", "area limit display redirect=None decimal=2");
+run("Set Scale...", "distance=644.0124 known=4 unit=cm global");
+title=getTitle()
+print(title)
+run("Split Channels");
+selectWindow(title +  " (red)");
+close();
+imageCalculator("Subtract create", "" + title + " (green)", "" + title + " (blue)");
+selectWindow("Result of " + title + " (green)");
+run("Subtract Background...", "rolling=10 light create");
+setOption("BlackBackground", true);
+run("Convert to Mask");
+run("Remove Outliers...", "radius=10 threshold=50 which=Bright");
+setAutoThreshold("Default dark");
+//run("Threshold...");
+run("Measure");
